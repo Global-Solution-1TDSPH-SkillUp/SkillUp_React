@@ -1,7 +1,7 @@
 export default function Cabecalho() {
-    return (
+    return(
         <header>
-            <h1>Skillup</h1>
+            <h1>SkillUp</h1>
         </header>
-    );
+    )
 }
