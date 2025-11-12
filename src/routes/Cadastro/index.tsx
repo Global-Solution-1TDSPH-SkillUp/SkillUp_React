@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-
+import { Link } from "react-router-dom"
 
 function onSubmit() {
     alert('Cadastro realizado com sucesso!')
@@ -58,6 +58,14 @@ export default function Cadastro(){
                 required
                 />
             </div>
+
+            <button
+            type="submit"
+            className="submit-button">
+                Cadastrar
+          </button>
+          <p className="login-link"> Já tem conta? <Link to="/login"> Faça login aqui </Link>
+        </p>
         </form>
         </div>
     )
