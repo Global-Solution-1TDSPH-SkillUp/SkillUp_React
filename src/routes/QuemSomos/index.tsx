@@ -12,7 +12,7 @@ export default function QuemSomos(){
                 <a href="https://github.com/GNLosano" target="blank" rel="noopener">
                 <FaGithub/>
                 </a>
-                <a href="">
+                <a href="https://www.linkedin.com/in/gabriellosano/" target="blank" rel="noopener">
                 <FaLinkedin/>
                 </a>
             </div>
@@ -34,7 +34,7 @@ export default function QuemSomos(){
                 <a href="https://github.com/PietroWilhelm" target="blank" rel="noopener">
                 <FaGithub/>
                 </a>
-                <a href="" target="blank" rel="noopener">
+                <a href="https://www.linkedin.com/in/pietrowilhelm/" target="blank" rel="noopener">
                 <FaLinkedin/>
                 </a>
             </div>
