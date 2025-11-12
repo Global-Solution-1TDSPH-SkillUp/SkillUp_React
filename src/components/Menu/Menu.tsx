@@ -5,6 +5,7 @@ export default function Menu() {
         <nav className="menu">
             <Link to="/">Inicio</Link>
             <Link to="/quemsomos">Quem Somos</Link>
+            <Link to="/contato">Contato</Link>
         </nav>
     )
 }
