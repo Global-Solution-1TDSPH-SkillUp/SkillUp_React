@@ -5,11 +5,13 @@ import App from './App.tsx'
 import Error from './routes/Error/index.tsx'
 import Home from './routes/Home/index.tsx'
 import Cadastro from './routes/Cadastro/index.tsx'
+import Login from './routes/Login/index.tsx'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
     {path:"/", element:<Home/>},
-    {path:"/cadastro", element:<Cadastro/>}
+    {path:"/cadastro", element:<Cadastro/>},
+    {path:"/login", element:<Login/>}
   ]}
 ])
 

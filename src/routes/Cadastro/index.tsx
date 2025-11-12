@@ -17,7 +17,7 @@ export default function Cadastro(){
         
         <form onSubmit={handleSubmit(onSubmit)}>
             
-        <div className="labelCadastro">
+            <div className="labelCadastro">
                 <label htmlFor="form-label"> Nome: </label>
                 <input type="text"
                 {...register("nome",{
@@ -39,6 +39,7 @@ export default function Cadastro(){
                 })}
                 />
             </div>
+
             <div className="labelCadastro">
                 <label htmlFor="form-label"> Senha:</label>
                 <input type="password" 
@@ -52,6 +53,7 @@ export default function Cadastro(){
                 })}
                 />
             </div>
+
             <div className="labelCadastro">
                 <label htmlFor="text"> Area de Interesse: </label>
                 <input type="text" 
@@ -64,8 +66,7 @@ export default function Cadastro(){
             className="submit-button">
                 Cadastrar
           </button>
-          <p className="login-link"> Já tem conta? <Link to="/login"> Faça login aqui </Link>
-        </p>
+          <p className="login-link"> Já tem conta? <Link to="/login"> Faça login aqui! </Link></p>
         </form>
         </div>
     )
