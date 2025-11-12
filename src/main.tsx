@@ -7,13 +7,15 @@ import Home from './routes/Home/index.tsx'
 import Cadastro from './routes/Cadastro/index.tsx'
 import Login from './routes/Login/index.tsx'
 import QuemSomos from './routes/QuemSomos/index.tsx'
+import Contato from './routes/Contato/index.tsx'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
     {path:"/", element:<Home/>},
     {path:"/cadastro", element:<Cadastro/>},
     {path:"/login", element:<Login/>},
-    {path:"/quemsomos", element:<QuemSomos/>}
+    {path:"/quemsomos", element:<QuemSomos/>},
+    {path:"/contato", element:<Contato/>}
   ]}
 ])
 
