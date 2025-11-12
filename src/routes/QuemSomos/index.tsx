@@ -7,7 +7,7 @@ export default function QuemSomos(){
             <h1>Conheça nossa Equipe</h1>
             <div>
                 <h2>Gabriel Neris Losano</h2>
-                <p>imagem aluno- placeholder</p>
+                <img src="../../public/losano.png" alt="foto do integrante Gabriel Neris Losano" />
                 <p> RM 564093 - 1TDSPH</p>
                 <a href="https://github.com/GNLosano" target="blank" rel="noopener">
                 <FaGithub/>
@@ -18,7 +18,7 @@ export default function QuemSomos(){
             </div>
             <div>
                 <h2>João Vitor Biribilli Ravelli</h2>
-                <p>imagem aluno- placeholder</p>
+                <img src="../../public/joao.png" alt="foto do integrante João Vitor Biribilli Ravelli" />
                 <p> RM 565594- 1TDSPH</p>
                 <a href="https://github.com/biribillidev" target="blank" rel="noopener">
                 <FaGithub/>
@@ -28,8 +28,8 @@ export default function QuemSomos(){
                 </a>
             </div>
             <div>
-                <h2>Pietro Paranhos Wilhelmi</h2>
-                <p>imagem aluno- placeholder</p>
+                <h2>Pietro Paranhos Wilhelm</h2>
+                <img src="../../public/pietro.png" alt="foto do integrante Pietro Paranhos Wilhelm" />
                 <p> RM 561378- 1TDSPH</p>
                 <a href="https://github.com/PietroWilhelm" target="blank" rel="noopener">
                 <FaGithub/>
