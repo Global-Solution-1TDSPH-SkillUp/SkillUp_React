@@ -25,7 +25,7 @@ export default function Login(){
             className="submit-button">
                 Login
           </button>
-          <p className="login-link"> Não tem uma conta? <Link to="/"> Faça o Cadastro aqui! </Link>
+          <p className="login-link"> Não tem uma conta? <Link to="/cadastro"> Faça o Cadastro aqui! </Link>
         </p>
         </form>
         </div>
