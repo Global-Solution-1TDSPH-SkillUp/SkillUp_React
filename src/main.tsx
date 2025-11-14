@@ -9,6 +9,7 @@ import Login from './routes/Login/index.tsx'
 import QuemSomos from './routes/QuemSomos/index.tsx'
 import Contato from './routes/Contato/index.tsx'
 import FAQ from './routes/FAQ/index.tsx'
+import './globals.css'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
