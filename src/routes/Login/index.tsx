@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login(){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [mostrarSenha, setMostrarSenha] = useState(false);
 
     return(
         <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4 py-12">
@@ -35,15 +37,24 @@ export default function Login(){
                         <label htmlFor="senha" className="block text-sm font-medium text-gray-700 mb-2">
                             Senha
                         </label>
-                        <input
-                            type="password"
-                            id="senha"
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
-                            placeholder="••••••••"
-                            required
-                            className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
-                        />
+                        <div className="relative">
+                            <input
+                                type={mostrarSenha ? "text" : "password"}
+                                id="senha"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                                placeholder="••••••••"
+                                required
+                                className="block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setMostrarSenha(!mostrarSenha)}
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                                {mostrarSenha ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Botão */}
