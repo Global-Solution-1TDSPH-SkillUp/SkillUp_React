@@ -15,7 +15,45 @@ export default function Login(){
 
     return(
         <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4 py-12">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+            <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-8 items-stretch">
+                {/* Painel Esquerdo - Bem-vindo */}
+                <div className="hidden lg:flex lg:w-1/2rounded-2xl p-12 flex-col justify-center">
+                    <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                        Bem-vindo de volta ao <span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SkillUp</span>
+                    </h2>
+                    <p className="text-gray-600 mb-12">
+                        Continue sua jornada de aprendizado e desenvolvimento profissional.
+                    </p>
+                    
+                    <div className="space-y-6">
+                        <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+                                <svg className="w-6 h-6 text-blue-600 text-pur" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-gray-800 text-lg mb-1">Acesso seguro</h3>
+                                <p className="text-gray-600 text-sm">Seus dados protegidos com criptografia</p>
+                            </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
+                                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-gray-800 text-lg mb-1">Aprendizado rápido</h3>
+                                <p className="text-gray-600 text-sm">Plataforma otimizada para você</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Painel Direito - Formulário */}
+                <div className="w-full lg:w-1/2 bg-white rounded-2xl shadow-2xl p-8">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-800 mb-2">Entrar</h1>
                     <p className="text-gray-600">Acesse sua conta do SkillUp</p>
@@ -84,9 +122,13 @@ export default function Login(){
                             />
                             <span className="ml-2 text-sm text-gray-700">Lembrar-me</span>
                         </label>
-                        <Link to="/recuperar-senha" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+                        <button 
+                            type="button"
+                            onClick={() => alert('Funcionalidade será implementada em breve!')}
+                            className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                        >
                             Esqueceu a senha?
-                        </Link>
+                        </button>
                     </div>
 
                     {/* Botão */}
@@ -105,6 +147,7 @@ export default function Login(){
                         Cadastre-se aqui
                     </Link>
                 </p>
+                </div>
             </div>
         </div>
     )
