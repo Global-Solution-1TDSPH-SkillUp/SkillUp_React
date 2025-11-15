@@ -6,6 +6,7 @@ export default function Login(){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [lembrarMe, setLembrarMe] = useState(false);
 
     return(
         <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4 py-12">
@@ -55,6 +56,22 @@ export default function Login(){
                                 {mostrarSenha ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
                             </button>
                         </div>
+                    </div>
+
+                    {/* Opções */}
+                    <div className="flex items-center justify-between">
+                        <label className="flex items-center cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={lembrarMe}
+                                onChange={(e) => setLembrarMe(e.target.checked)}
+                                className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                            />
+                            <span className="ml-2 text-sm text-gray-700">Lembrar-me</span>
+                        </label>
+                        <Link to="/recuperar-senha" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+                            Esqueceu a senha?
+                        </Link>
                     </div>
 
                     {/* Botão */}
