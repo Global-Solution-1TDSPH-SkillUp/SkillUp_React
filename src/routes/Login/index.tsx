@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Login(){
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
     return(
         <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4 py-12">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
@@ -9,15 +13,37 @@ export default function Login(){
                     <p className="text-gray-600">Acesse sua conta do SkillUp</p>
                 </div>
 
-                <form action="">
-                    <div className="labelLogin">
-                        <label htmlFor="form-label"> Nome: </label>
-                        <input type="text" />
+                <form className="space-y-6">
+                    {/* Email */}
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                            E-mail
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="seu@email.com"
+                            required
+                            className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                        />
                     </div>
                 
-                    <div className="labelLogin">
-                        <label htmlFor="form-label"> Senha: </label>
-                        <input type="password" />
+                    {/* Senha */}
+                    <div>
+                        <label htmlFor="senha" className="block text-sm font-medium text-gray-700 mb-2">
+                            Senha
+                        </label>
+                        <input
+                            type="password"
+                            id="senha"
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)}
+                            placeholder="••••••••"
+                            required
+                            className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                        />
                     </div>
 
                     <button type="submit" className="submit-button">
