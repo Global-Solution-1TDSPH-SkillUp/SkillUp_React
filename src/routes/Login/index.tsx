@@ -46,12 +46,20 @@ export default function Login(){
                         />
                     </div>
 
-                    <button type="submit" className="submit-button">
-                        Login
+                    {/* Botão */}
+                    <button
+                        type="submit"
+                        className="w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all shadow-lg hover:shadow-xl"
+                    >
+                        Entrar
                     </button>
                     
-                    <p className="login-link"> 
-                        Não tem uma conta? <Link to="/cadastro"> Faça o Cadastro aqui! </Link>
+                    {/* Link Cadastro */}
+                    <p className="text-center text-sm text-gray-600 mt-6">
+                        Não tem uma conta?{" "}
+                        <Link to="/cadastro" className="text-purple-600 hover:text-purple-700 font-semibold">
+                            Cadastre-se aqui
+                        </Link>
                     </p>
                 </form>
             </div>
