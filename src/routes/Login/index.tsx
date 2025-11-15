@@ -96,15 +96,15 @@ export default function Login(){
                     >
                         Entrar
                     </button>
-                    
-                    {/* Link Cadastro */}
-                    <p className="text-center text-sm text-gray-600 mt-6">
-                        Não tem uma conta?{" "}
-                        <Link to="/cadastro" className="text-purple-600 hover:text-purple-700 font-semibold">
-                            Cadastre-se aqui
-                        </Link>
-                    </p>
                 </form>
+
+                {/* Link Cadastro */}
+                <p className="text-center text-sm text-gray-600 mt-6">
+                    Não tem uma conta?{" "}
+                    <Link to="/cadastro" className="text-purple-600 hover:text-purple-700 font-semibold">
+                        Cadastre-se aqui
+                    </Link>
+                </p>
             </div>
         </div>
     )
