@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 
 export default function Login(){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [lembrarMe, setLembrarMe] = useState(false);
+
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        console.log({ email, senha, lembrarMe });
+    };
 
     return(
         <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4 py-12">
@@ -16,21 +21,28 @@ export default function Login(){
                     <p className="text-gray-600">Acesse sua conta do SkillUp</p>
                 </div>
 
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Email */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                             E-mail
                         </label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="seu@email.com"
-                            required
-                            className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
-                        />
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                                </svg>
+                            </div>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="seu@email.com"
+                                required
+                                className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                            />
+                        </div>
                     </div>
                 
                     {/* Senha */}
@@ -39,6 +51,9 @@ export default function Login(){
                             Senha
                         </label>
                         <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <FaLock className="h-5 w-5 text-gray-400" />
+                            </div>
                             <input
                                 type={mostrarSenha ? "text" : "password"}
                                 id="senha"
@@ -46,7 +61,7 @@ export default function Login(){
                                 onChange={(e) => setSenha(e.target.value)}
                                 placeholder="••••••••"
                                 required
-                                className="block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                                className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
                             />
                             <button
                                 type="button"
