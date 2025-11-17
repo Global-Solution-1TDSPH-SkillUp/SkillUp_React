@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { TipoUsuario } from "../../types/TipoUsuario";
-import { FaUser as User, FaEnvelope as Envelope, FaLightbulb as Lightbulb, FaCalendar as Calendar, FaSignOutAlt as Logout, FaLock as Lock, FaEye as Eye, FaEyeSlash as EyeSlash } from "react-icons/fa";
+import { FaUser as User, FaEnvelope as Envelope, FaLightbulb as Lightbulb, FaCalendar as Calendar, FaSignOutAlt as Logout, FaLock as Lock, FaEye as Eye, FaEyeSlash as EyeSlash, FaEdit as Edit } from "react-icons/fa";
 
 export default function Perfil(){
     const [usuario, setUsuario] = useState<TipoUsuario | null>(null);
@@ -122,8 +122,18 @@ export default function Perfil(){
                             </div>
                         </div>
 
-                        {/* Botão Sair */}
-                        <div className="pt-4 sm:pt-6">
+                        {/* Botões de Ação */}
+                        <div className="pt-4 sm:pt-6 space-y-3">
+                            {/* Botão Editar Perfil */}
+                            <button
+                                onClick={() => navigate('/editarPerfil')}
+                                className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-blue-600 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
+                            >
+                                <Edit className="text-lg sm:text-xl" />
+                                Editar Perfil
+                            </button>
+                            
+                            {/* Botão Sair */}
                             <button
                                 onClick={() => setMostrarModalSair(true)}
                                 className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-red-600 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-red-700 transition-all shadow-lg hover:shadow-xl"
