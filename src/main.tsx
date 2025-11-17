@@ -11,6 +11,7 @@ import Contato from './routes/Contato/index.tsx'
 import FAQ from './routes/FAQ/index.tsx'
 import './globals.css'
 import Perfil from './routes/Perfil/Perfil.tsx'
+import EditarPerfil from './routes/EditarPerfil/EditarPerfil.tsx'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
     {path:"/quemsomos", element:<QuemSomos/>},
     {path:"/contato", element:<Contato/>},
     {path:"/faq", element:<FAQ/>},
-    {path:"/perfil", element:<Perfil/>}
+    {path:"/perfil", element:<Perfil/>},
+    {path:"/editarPerfil", element:<EditarPerfil/>}
   ]}
 ])
 
