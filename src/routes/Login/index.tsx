@@ -1,16 +1,56 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
+import { FaEye as Eye, FaEyeSlash as EyeSlash, FaLock as Lock } from "react-icons/fa";
+import type { TipoUsuario } from "../../types/TipoUsuario";
 
 export default function Login(){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [lembrarMe, setLembrarMe] = useState(false);
+    const [erro, setErro] = useState("");
+    const [carregando, setCarregando] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        console.log({ email, senha, lembrarMe });
+        setErro("");
+        setCarregando(true);
+
+        try {
+            // Buscar todos os usuários
+            const response = await fetch('https://skillup-kb0z.onrender.com/usuarios');
+            
+            if (!response.ok) {
+                throw new Error('Erro ao conectar com o servidor');
+            }
+
+            const usuarios: TipoUsuario[] = await response.json();
+
+            // Verificar se existe um usuário com email e senha correspondentes
+            const usuarioEncontrado = usuarios.find(
+                (user) => user.email === email && user.senha === senha
+            );
+
+            if (usuarioEncontrado) {
+                // Login bem-sucedido
+                if (lembrarMe) {
+                    localStorage.setItem('usuario', JSON.stringify(usuarioEncontrado));
+                } else {
+                    sessionStorage.setItem('usuario', JSON.stringify(usuarioEncontrado));
+                }
+                
+                alert(`Bem-vindo(a), ${usuarioEncontrado.nome}!`);
+                navigate('/home');
+            } else {
+                setErro('Email ou senha incorretos');
+            }
+        } catch (error) {
+            console.error('Erro no login:', error);
+            setErro('Erro ao realizar login. Tente novamente.');
+        } finally {
+            setCarregando(false);
+        }
     };
 
     return(
@@ -60,6 +100,13 @@ export default function Login(){
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Mensagem de Erro */}
+                    {erro && (
+                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                            {erro}
+                        </div>
+                    )}
+
                     {/* Email */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -90,7 +137,7 @@ export default function Login(){
                         </label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <FaLock className="h-5 w-5 text-gray-400" />
+                                <Lock className="h-5 w-5 text-gray-400" />
                             </div>
                             <input
                                 type={mostrarSenha ? "text" : "password"}
@@ -106,7 +153,7 @@ export default function Login(){
                                 onClick={() => setMostrarSenha(!mostrarSenha)}
                                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
                             >
-                                {mostrarSenha ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                                {mostrarSenha ? <EyeSlash className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                             </button>
                         </div>
                     </div>
@@ -134,9 +181,10 @@ export default function Login(){
                     {/* Botão */}
                     <button
                         type="submit"
-                        className="w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all shadow-lg hover:shadow-xl"
+                        disabled={carregando}
+                        className="w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                     >
-                        Entrar
+                        {carregando ? 'Entrando...' : 'Entrar'}
                     </button>
                 </form>
 
