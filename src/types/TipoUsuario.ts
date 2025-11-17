@@ -4,7 +4,7 @@ export type TipoUsuario = {
     email: string;
     areaInteresse: string;
     senha: string;
-    dtCriacao: Date;
+    dtCadastro: string;
 }
 
-export type CadastroUsuario = Omit<TipoUsuario, 'idUsuario' | 'dtCriacao'>;
+export type CadastroUsuario = Omit<TipoUsuario, 'idUsuario' | 'dtCadastro'>;
