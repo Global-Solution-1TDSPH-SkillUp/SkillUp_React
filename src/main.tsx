@@ -13,9 +13,9 @@ import './globals.css'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
-    {path:"/", element:<Home/>},
+    {path:"/", element:<Login/>},
     {path:"/cadastro", element:<Cadastro/>},
-    {path:"/login", element:<Login/>},
+    {path:"/home", element:<Home/>},
     {path:"/quemsomos", element:<QuemSomos/>},
     {path:"/contato", element:<Contato/>},
     {path:"/faq", element:<FAQ/>}
