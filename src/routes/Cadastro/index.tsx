@@ -162,7 +162,7 @@ export default function Cadastro(){
                 {/* Link Login */}
                 <p className="text-center text-sm text-gray-600 mt-6">
                     Já tem conta?{" "}
-                    <Link to="/login" className="text-purple-600 hover:text-purple-700 font-semibold">
+                    <Link to="/" className="text-purple-600 hover:text-purple-700 font-semibold">
                         Faça login aqui!
                     </Link>
                 </p>
