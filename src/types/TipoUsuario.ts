@@ -6,3 +6,5 @@ export type TipoUsuario = {
     senha: string;
     dtCriacao: Date;
 }
+
+export type CadastroUsuario = Omit<TipoUsuario, 'idUsuario' | 'dtCriacao'>;
