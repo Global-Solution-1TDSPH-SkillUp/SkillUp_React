@@ -9,7 +9,7 @@ export default function Menu() {
             {/* Desktop Menu */}
             <nav className="hidden md:flex space-x-6 lg:space-x-8">
                 <Link 
-                    to="/" 
+                    to="/home" 
                     className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/10"
                 >
                     Início
@@ -60,7 +60,7 @@ export default function Menu() {
                 <div className="absolute top-20 left-0 right-0 bg-purple-700 md:hidden shadow-lg z-40">
                     <nav className="flex flex-col p-4 space-y-2">
                         <Link 
-                            to="/" 
+                            to="/home" 
                             onClick={() => setIsOpen(false)}
                             className="text-white hover:text-purple-200 px-4 py-3 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/10"
                         >
@@ -86,6 +86,13 @@ export default function Menu() {
                             className="text-white hover:text-purple-200 px-4 py-3 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/10"
                         >
                             FAQ
+                        </Link>
+                        <Link 
+                            to="/perfil" 
+                            onClick={() => setIsOpen(false)}
+                            className="text-white hover:text-purple-200 px-4 py-3 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/10"
+                        >
+                            Perfil
                         </Link>
                     </nav>
                 </div>
