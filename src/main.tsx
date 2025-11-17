@@ -10,6 +10,7 @@ import QuemSomos from './routes/QuemSomos/index.tsx'
 import Contato from './routes/Contato/index.tsx'
 import FAQ from './routes/FAQ/index.tsx'
 import './globals.css'
+import Perfil from './routes/Perfil/Perfil.tsx'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
     {path:"/home", element:<Home/>},
     {path:"/quemsomos", element:<QuemSomos/>},
     {path:"/contato", element:<Contato/>},
-    {path:"/faq", element:<FAQ/>}
+    {path:"/faq", element:<FAQ/>},
+    {path:"/perfil", element:<Perfil/>}
   ]}
 ])
 

@@ -32,6 +32,12 @@ export default function Menu() {
                 >
                     FAQ
                 </Link>
+                <Link 
+                    to="/perfil" 
+                    className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white/10"
+                >
+                    Perfil
+                </Link>
             </nav>
 
             {/* Mobile Menu Button */}
