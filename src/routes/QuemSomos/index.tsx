@@ -65,7 +65,6 @@ export default function QuemSomos(){
 
                         <p className="text-gray-600 text-sm mb-6">
                             Estudante de Tecnologia e Desenvolvedor Full-Stack.
-                            {/* Você pode adicionar descrições individuais se desejar. */}
                         </p>
                         
                         {/* Links Sociais */}
