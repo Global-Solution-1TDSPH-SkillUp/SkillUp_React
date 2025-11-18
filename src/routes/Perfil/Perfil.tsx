@@ -1,25 +1,79 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { TipoUsuario } from "../../types/TipoUsuario";
-import { FaUser as User, FaEnvelope as Envelope, FaLightbulb as Lightbulb, FaCalendar as Calendar, FaSignOutAlt as Logout, FaLock as Lock, FaEye as Eye, FaEyeSlash as EyeSlash, FaEdit as Edit } from "react-icons/fa";
+import type { TipoUsuarioHardSkill, TipoUsuarioSoftSkill } from "../../types/TipoSkill";
+import { FaUser, FaSignOutAlt as Logout, FaEdit, FaUserGraduate, FaUsers, FaFileAlt } from "react-icons/fa";
 
 export default function Perfil(){
     const [usuario, setUsuario] = useState<TipoUsuario | null>(null);
-    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [hardSkills, setHardSkills] = useState<TipoUsuarioHardSkill[]>([]);
+    const [softSkills, setSoftSkills] = useState<TipoUsuarioSoftSkill[]>([]);
     const [mostrarModalSair, setMostrarModalSair] = useState(false);
+    const [carregando, setCarregando] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Buscar usuário do localStorage ou sessionStorage
-        const usuarioStorage = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
-        
-        if (!usuarioStorage) {
-            // Se não estiver logado, redireciona para login
-            navigate('/');
-            return;
-        }
+        const carregarDadosPerfil = async () => {
+            // Buscar usuário do localStorage ou sessionStorage
+            const usuarioStorage = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
+            
+            if (!usuarioStorage) {
+                navigate('/');
+                return;
+            }
 
-        setUsuario(JSON.parse(usuarioStorage));
+            const dadosUsuario = JSON.parse(usuarioStorage);
+            setUsuario(dadosUsuario);
+
+            // Função para tentar fetch com retry (cold start no Render)
+            const fetchComRetry = async (url: string, tentativas = 2): Promise<Response> => {
+                for (let i = 0; i < tentativas; i++) {
+                    try {
+                        const res = await fetch(url);
+                        if (res.ok) return res;
+                        
+                        // Se erro 404, aguardar antes de tentar novamente (cold start)
+                        if (res.status === 404 && i < tentativas - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 3000));
+                            continue;
+                        }
+                        return res;
+                    } catch (erro) {
+                        if (i < tentativas - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 3000));
+                            continue;
+                        }
+                        throw erro;
+                    }
+                }
+                throw new Error('Falha após tentativas');
+            };
+
+            try {
+                // Buscar hard skills do usuário - buscar todos e filtrar
+                const resHardSkills = await fetchComRetry(`https://skillup-kb0z.onrender.com/usuario-hardskill`);
+                if (resHardSkills.ok) {
+                    const todosHardSkills = await resHardSkills.json();
+                    const dadosHardSkills = todosHardSkills.filter((h: any) => 
+                        Number(h.idUsuario) === Number(dadosUsuario.idUsuario)
+                    );
+                    setHardSkills(dadosHardSkills);
+                }
+
+                // Buscar soft skills do usuário - endpoint específico existe
+                const resSoftSkills = await fetchComRetry(`https://skillup-kb0z.onrender.com/usuario-softskills/usuario/${dadosUsuario.idUsuario}`);
+                if (resSoftSkills.ok) {
+                    const dadosSoftSkills = await resSoftSkills.json();
+                    setSoftSkills(dadosSoftSkills);
+                }
+            } catch (error) {
+                // Erro silencioso - dados não essenciais
+            } finally {
+                setCarregando(false);
+            }
+        };
+
+        carregarDadosPerfil();
     }, [navigate]);
 
     const handleLogout = () => {
@@ -29,10 +83,13 @@ export default function Perfil(){
         navigate('/');
     };
 
-    if (!usuario) {
+    if (!usuario || carregando) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <p className="text-gray-600">Carregando...</p>
+            <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-purple-50 to-pink-50">
+                <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-600 text-lg">Carregando perfil...</p>
+                </div>
             </div>
         );
     }
@@ -40,108 +97,119 @@ export default function Perfil(){
     return(
         <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 py-6 sm:py-12 px-3 sm:px-4">
             <div className="max-w-4xl mx-auto">
-                {/* Card Principal */}
-                <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
-                    {/* Header do Card */}
-                    <div className="bg-linear-to-r from-blue-600 to-purple-600 px-4 sm:px-8 py-8 sm:py-12 text-center">
-                        <div className="w-20 h-20 sm:w-32 sm:h-32 bg-white rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
-                            <User className="text-4xl sm:text-6xl text-purple-600" />
-                        </div>
-                        <h1 className="text-xl sm:text-3xl font-bold text-white mb-2 wrap-break-word">{usuario.nome}</h1>
-                        <p className="text-sm sm:text-base text-blue-100 break-all">{usuario.email}</p>
-                    </div>
-
-                    {/* Informações do Perfil */}
-                    <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
-                        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Informações do Perfil</h2>
-
-                        {/* Nome */}
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
-                                <User className="text-blue-600 text-lg sm:text-xl" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <p className="text-xs sm:text-sm text-gray-500 font-medium">Nome Completo</p>
-                                <p className="text-sm sm:text-base text-gray-800 font-semibold wrap-break-word">{usuario.nome}</p>
-                            </div>
-                        </div>
-
-                        {/* Email */}
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
-                                <Envelope className="text-purple-600 text-lg sm:text-xl" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <p className="text-xs sm:text-sm text-gray-500 font-medium">E-mail</p>
-                                <p className="text-sm sm:text-base text-gray-800 font-semibold break-all">{usuario.email}</p>
-                            </div>
-                        </div>
-
-                        {/* Área de Interesse */}
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
-                                <Lightbulb className="text-green-600 text-lg sm:text-xl" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <p className="text-xs sm:text-sm text-gray-500 font-medium">Área de Interesse</p>
-                                <p className="text-sm sm:text-base text-gray-800 font-semibold wrap-break-word">{usuario.areaInteresse}</p>
-                            </div>
-                        </div>
-
-                        {/* Senha */}
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
-                                <Lock className="text-red-600 text-lg sm:text-xl" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-xs sm:text-sm text-gray-500 font-medium">Senha</p>
-                                <div className="flex items-center gap-2">
-                                    <p className="text-sm sm:text-base text-gray-800 font-semibold break-all">
-                                        {mostrarSenha ? usuario.senha : '••••••••'}
-                                    </p>
-                                    <button
-                                        onClick={() => setMostrarSenha(!mostrarSenha)}
-                                        className="text-gray-400 hover:text-gray-600 transition-colors shrink-0"
-                                    >
-                                        {mostrarSenha ? <EyeSlash className="text-base sm:text-lg" />: <Eye className="text-base sm:text-lg" />}
-                                    </button>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    {/* Coluna Esquerda - Card de Perfil */}
+                    <div className="space-y-6">
+                        {/* Card de Informações Básicas */}
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
+                            {/* Header com gradiente */}
+                            <div className="bg-linear-to-r from-gray-400 to-gray-500 px-6 py-8 relative">
+                                <button
+                                    onClick={() => navigate('/editarPerfil')}
+                                    className="absolute top-4 right-4 w-10 h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                                >
+                                    <FaEdit className="text-white text-lg" />
+                                </button>
+                                
+                                <div className="flex items-center gap-4">
+                                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-full flex items-center justify-center shrink-0">
+                                        <FaUser className="text-4xl sm:text-5xl text-gray-400" />
+                                    </div>
+                                    <div className="text-white">
+                                        <h1 className="text-2xl sm:text-3xl font-bold mb-1">{usuario.nome}</h1>
+                                        <p className="text-sm sm:text-base text-gray-200">{usuario.areaInteresse}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* Data de Cadastro */}
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-lg flex items-center justify-center shrink-0">
-                                <Calendar className="text-yellow-600 text-lg sm:text-xl" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <p className="text-xs sm:text-sm text-gray-500 font-medium">Membro desde</p>
-                                <p className="text-sm sm:text-base text-gray-800 font-semibold">
-                                    {new Date(usuario.dtCadastro).toLocaleDateString('pt-BR')}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Botões de Ação */}
-                        <div className="pt-4 sm:pt-6 space-y-3">
-                            {/* Botão Editar Perfil */}
-                            <button
-                                onClick={() => navigate('/editarPerfil')}
-                                className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-blue-600 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
-                            >
-                                <Edit className="text-lg sm:text-xl" />
-                                Editar Perfil
-                            </button>
+                    {/* Coluna Direita - Skills e Ações */}
+                    <div className="space-y-6">
+                        
+                        {/* Tabela de Skills */}
+                        <div className="bg-gray-100 rounded-xl sm:rounded-2xl p-6 shadow-lg">
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 text-center">Tabela de Skills</h2>
                             
-                            {/* Botão Sair */}
-                            <button
-                                onClick={() => setMostrarModalSair(true)}
-                                className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-red-600 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-red-700 transition-all shadow-lg hover:shadow-xl"
-                            >
-                                <Logout className="text-lg sm:text-xl" />
-                                Sair da Conta
-                            </button>
+                            {/* Grid de Skills 3x3 */}
+                            <div className="grid grid-cols-3 gap-3 mb-6">
+                                {/* Hard Skills */}
+                                {hardSkills.slice(0, 2).map((skill) => (
+                                    <div
+                                        key={skill.idHardSkill}
+                                        className="bg-gray-300 rounded-xl aspect-square flex flex-col items-center justify-center p-3 hover:bg-gray-400 transition-colors cursor-pointer"
+                                    >
+                                        <FaUserGraduate className="text-3xl text-gray-700 mb-2" />
+                                        <p className="text-xs font-semibold text-center text-gray-800 line-clamp-2">
+                                            {skill.nomeHardSkill.split(' ')[0]}
+                                        </p>
+                                    </div>
+                                ))}
+                                
+                                {/* Soft Skills */}
+                                {softSkills.slice(0, 1).map((skill) => (
+                                    <div
+                                        key={skill.idSoftSkill}
+                                        className="bg-gray-300 rounded-xl aspect-square flex flex-col items-center justify-center p-3 hover:bg-gray-400 transition-colors cursor-pointer"
+                                    >
+                                        <FaUsers className="text-3xl text-gray-700 mb-2" />
+                                        <p className="text-xs font-semibold text-center text-gray-800 line-clamp-2">
+                                            {skill.nomeSoftSkill.split(' ')[0]}
+                                        </p>
+                                    </div>
+                                ))}
+                                
+                                {/* Células vazias (placeholders) */}
+                                {[...Array(Math.max(0, 6 - hardSkills.length - softSkills.length))].map((_, i) => (
+                                    <div
+                                        key={`empty-${i}`}
+                                        className="bg-gray-300 rounded-xl aspect-square"
+                                    ></div>
+                                ))}
+                            </div>
+
+                            {/* Legenda */}
+                            {(hardSkills.length > 0 || softSkills.length > 0) && (
+                                <div className="flex gap-4 justify-center text-xs sm:text-sm">
+                                    {hardSkills.length > 0 && (
+                                        <div className="flex items-center gap-2">
+                                            <FaUserGraduate className="text-gray-700" />
+                                            <span className="text-gray-700">Hard Skills</span>
+                                        </div>
+                                    )}
+                                    {softSkills.length > 0 && (
+                                        <div className="flex items-center gap-2">
+                                            <FaUsers className="text-gray-700" />
+                                            <span className="text-gray-700">Soft Skills</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
+
+                        {/* Botão Gerenciar Skills */}
+                        <button 
+                            onClick={() => navigate('/gerenciar-skills')}
+                            className="w-full bg-blue-600 text-white py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                        >
+                            <FaEdit className="text-xl" />
+                            Gerenciar Skills
+                        </button>
+
+                        {/* Botão Gerar Relatório */}
+                        <button className="w-full bg-black text-white py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-3">
+                            <FaFileAlt className="text-xl" />
+                            Gerar Relatório de Skills
+                        </button>
+
+                        {/* Botão Sair */}
+                        <button
+                            onClick={() => setMostrarModalSair(true)}
+                            className="w-full bg-red-600 text-white py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:bg-red-700 transition-all shadow-lg hover:shadow-xl"
+                        >
+                            Sair
+                        </button>
                     </div>
                 </div>
 
