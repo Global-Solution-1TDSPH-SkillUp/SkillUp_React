@@ -57,36 +57,51 @@ export default function GerenciarSkills() {
             try {
                 // Carregar Hard Skills Disponíveis
                 const resHard = await fetchComRetry('https://skillup-kb0z.onrender.com/hardskills');
+                console.log(' Hard Skills Response:', resHard.status, resHard.ok);
                 if (resHard.ok) {
                     const dados = await resHard.json();
+                    console.log(' Hard Skills carregadas:', dados.length, dados);
                     setTodasHardSkills(dados);
+                } else {
+                    console.error(' Falha ao carregar Hard Skills - Status:', resHard.status);
                 }
                 
                 // Carregar Soft Skills Disponíveis
                 const resSoft = await fetchComRetry('https://skillup-kb0z.onrender.com/softskills');
+                console.log(' Soft Skills Response:', resSoft.status, resSoft.ok);
                 if (resSoft.ok) {
                     const dados = await resSoft.json();
+                    console.log(' Soft Skills carregadas:', dados.length, dados);
                     setTodasSoftSkills(dados);
+                } else {
+                    console.error(' Falha ao carregar Soft Skills - Status:', resSoft.status);
                 }
                 
                 // Carregar Minhas Hard Skills
                 const resMinhasHard = await fetchComRetry('https://skillup-kb0z.onrender.com/usuario-hardskill');
+                console.log(' Minhas Hard Skills Response:', resMinhasHard.status, resMinhasHard.ok);
                 if (resMinhasHard.ok) {
                     const todosRegistros = await resMinhasHard.json();
+                    console.log(' Todos registros Hard Skills:', todosRegistros.length);
                     const dados = todosRegistros.filter((r: any) => 
                         Number(r.idUsuario) === Number(dadosUsuario.idUsuario)
                     );
+                    console.log('Minhas Hard Skills filtradas:', dados.length, dados);
                     setMinhasHardSkills(dados);
                 } else {
+                    console.error(' Falha Minhas Hard Skills - Status:', resMinhasHard.status);
                     setMinhasHardSkills([]);
                 }
                 
                 // Carregar Minhas Soft Skills
                 const resMinhasSoft = await fetchComRetry(`https://skillup-kb0z.onrender.com/usuario-softskills/usuario/${dadosUsuario.idUsuario}`);
+                console.log(' Minhas Soft Skills Response:', resMinhasSoft.status, resMinhasSoft.ok);
                 if (resMinhasSoft.ok) {
                     const dados = await resMinhasSoft.json();
+                    console.log(' Minhas Soft Skills carregadas:', dados.length, dados);
                     setMinhasSoftSkills(dados);
                 } else {
+                    console.error(' Falha Minhas Soft Skills - Status:', resMinhasSoft.status);
                     setMinhasSoftSkills([]);
                 }
             } catch (error) {
