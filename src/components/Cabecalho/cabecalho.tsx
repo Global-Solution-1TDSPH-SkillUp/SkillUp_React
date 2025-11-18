@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom"
 
 export default function Cabecalho() {
     const location = useLocation() // Acesso a localização atual da rota
-    const rotasSemMenu = ['/', '/cadastro'] //crio uma lista de  Rotas onde o menu não deve ser exibido
+    const rotasSemMenu = ['/', '/cadastro', '/editarPerfil', '/gerenciar-skills'] //crio uma lista de  Rotas onde o menu não deve ser exibido
     const mostrarMenu = !rotasSemMenu.includes(location.pathname) // Verifico se a rota atual está na lista de rotas sem menu
 
     return(
