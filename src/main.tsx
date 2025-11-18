@@ -12,6 +12,7 @@ import FAQ from './routes/FAQ/index.tsx'
 import './globals.css'
 import Perfil from './routes/Perfil/Perfil.tsx'
 import EditarPerfil from './routes/EditarPerfil/EditarPerfil.tsx'
+import GerenciarSkills from './routes/GerenciarSkills/GerenciarSkills.tsx'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
@@ -22,7 +23,8 @@ const router = createBrowserRouter([
     {path:"/contato", element:<Contato/>},
     {path:"/faq", element:<FAQ/>},
     {path:"/perfil", element:<Perfil/>},
-    {path:"/editarPerfil", element:<EditarPerfil/>}
+    {path:"/editarPerfil", element:<EditarPerfil/>},
+    {path:"/gerenciar-skills", element:<GerenciarSkills/>}
   ]}
 ])
 
