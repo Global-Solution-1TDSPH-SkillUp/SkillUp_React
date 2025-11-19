@@ -1,10 +1,10 @@
 export type TipoEndereco = {
     idEndereco: number;
-    nomeLogradouro: string;
+    dsLogradouro: string;
     numero: number;
-    estado: string;
-    cidade: string;
-    cep: string;
+    dsEstado: string;
+    dsCidade: string;
+    nrCep: string;
     idUsuario: number;
 }
 
