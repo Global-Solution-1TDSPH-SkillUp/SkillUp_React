@@ -3,14 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import type { TipoUsuario } from "../../types/TipoUsuario";
 import { FaUser as User, FaEnvelope as Envelope, FaLightbulb as Lightbulb , FaSave as Save, FaTimes as Times, FaLock as Lock, FaEye as Eye, FaEyeSlash as EyeSlash } from "react-icons/fa";
+import { buscarEnderecoPorUsuario, salvarEndereco, FormularioEndereco } from "../Endereco/Endereco";
+import type { TipoEndereco } from "../../types/TipoEndereco";
+
 
 type FormEditarPerfil = {
     nome: string;
     email: string;
     areaInteresse: string;
-    senhaAtual: string;
+    senhaAtual?: string;
     novaSenha?: string;
     confirmarSenha?: string;
+    // Endereço
+    nrCep?: string;
+    dsLogradouro?: string;
+    numero?: string;
+    dsEstado?: string;
+    dsCidade?: string;
 };
 
 export default function EditarPerfil(){
@@ -19,7 +28,9 @@ export default function EditarPerfil(){
     const [mostrarNovaSenha, setMostrarNovaSenha] = useState(false);
     const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
     const [alterarSenha, setAlterarSenha] = useState(false);
+    const [possuiEndereco, setPossuiEndereco] = useState(false);
     const [mensagemSucesso, setMensagemSucesso] = useState(false);
+    const [endereco, setEndereco] = useState<Partial<TipoEndereco>>({});
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormEditarPerfil>();
@@ -34,22 +45,51 @@ export default function EditarPerfil(){
 
         const dadosUsuario = JSON.parse(usuarioStorage);
         setUsuario(dadosUsuario);
+        
+        // Carregar endereço existente do usuário
+        const carregarEndereco = async () => {
+            try {
+                const enderecoExistente = await buscarEnderecoPorUsuario(dadosUsuario.idUsuario);
+                if (enderecoExistente) {
+                    setEndereco(enderecoExistente);
+                    setPossuiEndereco(true);
+                }
+            } catch (error) {
+                // Ignora se não tiver endereço
+            }
+        };
+        
+        if (dadosUsuario.idUsuario) {
+            carregarEndereco();
+        }
     }, [navigate]);
+
+    const atualizarCampoEndereco = (campo: keyof TipoEndereco, valor: string | number) => {
+        setEndereco(prev => ({ ...prev, [campo]: valor }));
+    };
 
     const onSubmit = async (data: FormEditarPerfil) => {
         if (!usuario) return;
 
-        // Validar senha atual
-        if (data.senhaAtual !== usuario.senha) {
-            setError('senhaAtual', {
-                type: 'manual',
-                message: 'Senha atual incorreta'
-            });
-            return;
-        }
-
-        // Se está alterando a senha, validar nova senha
+        // Se está alterando a senha, validar senha atual e nova senha
         if (alterarSenha) {
+            // Validar senha atual
+            if (!data.senhaAtual) {
+                setError('senhaAtual', {
+                    type: 'manual',
+                    message: 'Digite sua senha atual para alterar a senha'
+                });
+                return;
+            }
+
+            if (data.senhaAtual !== usuario.senha) {
+                setError('senhaAtual', {
+                    type: 'manual',
+                    message: 'Senha atual incorreta'
+                });
+                return;
+            }
+
             if (!data.novaSenha || !data.confirmarSenha) {
                 setError('novaSenha', {
                     type: 'manual',
@@ -62,6 +102,33 @@ export default function EditarPerfil(){
                 setError('confirmarSenha', {
                     type: 'manual',
                     message: 'As senhas não coincidem'
+                });
+                return;
+            }
+        }
+
+        // Salvar endereço se checkbox marcado e campos preenchidos
+        if (possuiEndereco && endereco.nrCep && endereco.dsLogradouro && endereco.numero && endereco.dsCidade && endereco.dsEstado) {
+            try {
+                const cepLimpo = endereco.nrCep.toString().trim().replace(/\D/g, '');
+                const cepFormatado = cepLimpo.length === 8 ? `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}` : endereco.nrCep.toString();
+                
+                const enderecoParaSalvar = {
+                    ...endereco,
+                    nrCep: cepFormatado,
+                    dsLogradouro: endereco.dsLogradouro.toString().trim(),
+                    dsCidade: endereco.dsCidade.toString().trim(),
+                    dsEstado: endereco.dsEstado.toString().trim(),
+                    numero: Number(endereco.numero),
+                    idUsuario: usuario.idUsuario
+                };
+
+                const enderecoSalvo = await salvarEndereco(enderecoParaSalvar);
+                setEndereco(enderecoSalvo);
+            } catch (error) {
+                setError('areaInteresse', {
+                    type: 'manual',
+                    message: 'Erro ao salvar endereço. Tente novamente.'
                 });
                 return;
             }
@@ -107,7 +174,6 @@ export default function EditarPerfil(){
             }, 2000);
 
         } catch (error) {
-            console.error('Erro ao atualizar perfil:', error);
             setError('senhaAtual', {
                 type: 'manual',
                 message: 'Erro ao atualizar perfil. Tente novamente.'
@@ -207,34 +273,20 @@ export default function EditarPerfil(){
                             {errors.areaInteresse && <p className="text-red-600 text-xs sm:text-sm mt-1">{errors.areaInteresse.message}</p>}
                         </div>
 
-                        {/* Senha Atual (Obrigatória) */}
-                        <div>
-                            <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2 text-sm sm:text-base">
-                                <Lock className="text-red-600" />
-                                Senha Atual *
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type={mostrarSenhaAtual ? "text" : "password"}
-                                    {...register('senhaAtual', {
-                                        required: 'Digite sua senha atual para confirmar as alterações'
-                                    })}
-                                    className="w-full px-4 py-2.5 sm:py-3 pr-12 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-sm sm:text-base"
-                                    placeholder="Digite sua senha atual"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setMostrarSenhaAtual(!mostrarSenhaAtual)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                                >
-                                    {mostrarSenhaAtual ? <EyeSlash/> : <Eye/>}
-                                </button>
+                        {/* Exibir Endereço Atual */}
+                        {endereco.idEndereco && (
+                            <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                                <h3 className="font-semibold text-blue-900 mb-2">📍 Endereço Cadastrado</h3>
+                                <div className="text-sm text-blue-800 space-y-1">
+                                    <p><strong>CEP:</strong> {endereco.nrCep}</p>
+                                    <p><strong>Logradouro:</strong> {endereco.dsLogradouro}, {endereco.numero}</p>
+                                    <p><strong>Cidade/Estado:</strong> {endereco.dsCidade} - {endereco.dsEstado}</p>
+                                </div>
                             </div>
-                            {errors.senhaAtual && <p className="text-red-600 text-xs sm:text-sm mt-1">{errors.senhaAtual.message}</p>}
-                        </div>
+                        )}
 
                         {/* Checkbox para alterar senha */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 pt-4 border-t-2 border-gray-200">
                             <input
                                 type="checkbox"
                                 id="alterarSenha"
@@ -247,9 +299,32 @@ export default function EditarPerfil(){
                             </label>
                         </div>
 
-                        {/* Campos de Nova Senha (Condicional) */}
+                        {/* Campos de Senha (Condicional) */}
                         {alterarSenha && (
-                            <div className="space-y-4 sm:space-y-5 bg-gray-50 p-4 rounded-lg border-2 border-gray-200">
+                            <div className="space-y-4 sm:space-y-5 bg-orange-50 p-4 rounded-lg border-2 border-orange-200">
+                                {/* Senha Atual */}
+                                <div>
+                                    <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                                        <Lock className="text-red-600" />
+                                        Senha Atual *
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            type={mostrarSenhaAtual ? "text" : "password"}
+                                            {...register('senhaAtual')}
+                                            className="w-full px-4 py-2.5 sm:py-3 pr-12 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-sm sm:text-base"
+                                            placeholder="Digite sua senha atual"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setMostrarSenhaAtual(!mostrarSenhaAtual)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        >
+                                            {mostrarSenhaAtual ? <EyeSlash/> : <Eye/>}
+                                        </button>
+                                    </div>
+                                    {errors.senhaAtual && <p className="text-red-600 text-xs sm:text-sm mt-1">{errors.senhaAtual.message}</p>}
+                                </div>
                                 {/* Nova Senha */}
                                 <div>
                                     <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2 text-sm sm:text-base">
@@ -305,6 +380,19 @@ export default function EditarPerfil(){
                                 </div>
                             </div>
                         )}
+                        
+
+                        
+
+                        {/* Formulário de Endereço */}
+                        <FormularioEndereco 
+                            possuiEndereco={possuiEndereco}
+                            onPossuiEnderecoChange={setPossuiEndereco}
+                            endereco={endereco}
+                            onEnderecoChange={atualizarCampoEndereco}
+                        />
+
+                        
 
                         {/* Botões de Ação */}
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
