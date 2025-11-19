@@ -65,7 +65,7 @@ export default function Contato(){
                             
                             {/* Botão de Ação */}
                             <a 
-                                href={canal.titulo === "Telefone" ? `tel:${canal.acao.replace(/[^0-9]/g, "")}` : "#"} // Adiciona href para links reais
+                                href={canal.titulo === "Telefone" ? `tel:${canal.acao.replace(/[^0-9]/g, "")}` : "#"}
                                 className={`w-full max-w-xs px-6 py-3 mt-2 mb-4 text-lg font-bold text-white bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors shadow-md`}
                             >
                                 {canal.acao}
