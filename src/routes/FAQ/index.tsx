@@ -9,28 +9,28 @@ export default function FAQ(){
 
                 <div className="space-y-4">
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-800">-------</h3>
-                        <p className="text-gray-600 mt-2">------</p>
+                        <h3 className="text-lg font-semibold text-gray-800">---------------</h3>
+                        <p className="text-gray-600 mt-2">------------------------</p>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-800">-------</h3>
-                        <p className="text-gray-600 mt-2">------</p>
+                        <h3 className="text-lg font-semibold text-gray-800">-------------</h3>
+                        <p className="text-gray-600 mt-2">---------</p>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-800">----------</h3>
+                        <h3 className="text-lg font-semibold text-gray-800">--------</h3>
                         <p className="text-gray-600 mt-2">-----------</p>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-800">----------</h3>
-                        <p className="text-gray-600 mt-2">----------</p>
+                        <h3 className="text-lg font-semibold text-gray-800">-----------</h3>
+                        <p className="text-gray-600 mt-2">--------</p>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-800">------------------</h3>
-                        <p className="text-gray-600 mt-2">-------------</p>
+                        <h3 className="text-lg font-semibold text-gray-800">Como posso entrar em Contato?</h3>
+                        <p className="text-gray-600 mt-2">Você pode entrar em contato conosco na página <Link to="/contato" className="text-purple-600 font-semibold">Contato</Link>.</p>
                     </div>
                 </div>
             </div>
