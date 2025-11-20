@@ -54,6 +54,11 @@ export default function FAQ(){
                     </div>
                     
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">Quem são vocês?</h3>
+                        <p className="text-gray-600 mt-2">Saiba mais sobre nossa equipe e missão na página <Link to="/quemsomos" className="text-purple-600 font-semibold">Quem Somos</Link>.</p>
+                    </div>
+
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
                         <h3 className="text-lg font-semibold text-gray-800">Como posso entrar em Contato?</h3>
                         <p className="text-gray-600 mt-2">Você pode entrar em contato conosco na página <Link to="/contato" className="text-purple-600 font-semibold">Contato</Link>.</p>
                     </div>
