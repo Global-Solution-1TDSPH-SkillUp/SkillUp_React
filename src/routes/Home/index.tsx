@@ -1,28 +1,43 @@
+import { useTheme } from '../../contexts/ThemeContext'
+
+
 export default function Home(){
+    const { theme } = useTheme()
+
     return(
-        <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 py-16 px-4">
+        <div className={`min-h-[calc(100vh-5rem)] py-16 px-4 transition-colors duration-300 ${
+        theme === 'dark'
+        ? 'bg-gray-100 text-white'
+        : 'bg-linear-to-br from-blue-50 via-purple-50 to-pink-50'
+        }`}>
+
             
-            <div className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl">
+            <div className={`max-w-4xl mx-auto p-8 md:p-12 rounded-xl shadow-2xl transition-colors duration-300 ${
+            theme === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-800'
+            }`}>
+
                 
                 <h2 className="text-4xl font-extrabold text-gray-800 mb-6 border-b pb-4 border-purple-200">
                     👋 <span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Bem-vindo(a) ao Skill Up!</span>
                 </h2>
 
-                <p className="text-lg text-gray-700 mb-4">
-                    O Skill Up é a sua plataforma dedicada ao <strong className="text-purple-600">Reskilling</strong> e <strong className="text-purple-600">Upskilling</strong> – o caminho certo para aprimorar suas habilidades e turbinar seu currículo para o mercado de trabalho.
+                <p className={`text-lg mb-4 transition-colors ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                O Skill Up é a sua plataforma dedicada ao <strong className="text-purple-600">Reskilling</strong> e <strong className="text-purple-600">Upskilling</strong> – o caminho certo para aprimorar suas habilidades e turbinar seu currículo para o mercado de trabalho.
                 </p>
-                <p className="text-lg text-gray-700 mb-8">
-                    Nossa missão é oferecer o conhecimento necessário para que você se destaque, aprenda novas <em className="text-blue-600 italic">skills</em> e conquiste as melhores oportunidades.
+                <p className={`text-lg mb-8 transition-colors ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Nossa missão é oferecer o conhecimento necessário para que você se destaque, aprenda novas <em className="text-blue-600 italic">skills</em> e conquiste as melhores oportunidades.
                 </p>
+
 
                 <div className="h-1 bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full my-10"></div>
 
-                <h3 className="text-3xl font-bold text-gray-800 mb-4">
-                    Como Usar o Site
+                <h3 className={`text-3xl font-bold mb-4 transition-colors ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                  Como Usar o Site
                 </h3>
-                <p className="text-gray-600 mb-8">
-                    Navegue pelas seções abaixo para entender como aproveitar ao máximo a sua experiência no Skill Up.
+                <p className={`mb-8 transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Navegue pelas seções abaixo para entender como aproveitar ao máximo a sua experiência no Skill Up.
                 </p>
+
 
                 <div className="mb-10 p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500 shadow-sm">
                     <h4 className="text-2xl font-semibold text-purple-700 mb-3">
@@ -70,9 +85,10 @@ export default function Home(){
                 
                 <div className="h-1 bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full my-10"></div>
 
-                <h3 className="text-3xl font-bold text-gray-800 mb-6">
-                    Links Úteis
+                <h3 className={`text-3xl font-bold mb-6 transition-colors ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                Links Úteis
                 </h3>
+
 
                 <div className="space-y-6">
                     <div className="p-4 bg-gray-50 rounded-lg border-l-4 border-pink-500">
