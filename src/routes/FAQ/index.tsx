@@ -27,7 +27,32 @@ export default function FAQ(){
                         <h3 className="text-lg font-semibold text-gray-800">Posso exportar meu Perfil?</h3>
                         <p className="text-gray-600 mt-2">Sim — é possível exportar seu perfil com cursos e skills cadastrados.</p>
                     </div>
+                 
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">Como recupero minha senha?</h3>
+                        <p className="text-gray-600 mt-2">Use a opção "Esqueci minha senha" na tela de login para receber instruções por e-mail e redefinir sua senha.</p>
+                    </div>
 
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">O cadastro é gratuito?</h3>
+                        <p className="text-gray-600 mt-2">Sim — criar uma conta e acessar grande parte do conteúdo é gratuito. Alguns cursos ou recursos avançados podem ser pagos.</p>
+                    </div>
+
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">Recebo certificado pelos cursos?</h3>
+                        <p className="text-gray-600 mt-2">Muitos cursos oferecem certificado ao final. Verifique a página do curso para confirmar a disponibilidade e formato do certificado.</p>
+                    </div>
+
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">Posso integrar meu perfil com o LinkedIn?</h3>
+                        <p className="text-gray-600 mt-2">Em breve teremos integração com o LinkedIn para importar habilidades e compartilhar certificados. Por enquanto, você pode exportar seu perfil manualmente.</p>
+                    </div>
+
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">Quais idiomas o site suporta?</h3>
+                        <p className="text-gray-600 mt-2">Atualmente o site está em português. Planejamos adicionar suporte a outros idiomas conforme a demanda.</p>
+                    </div>
+                    
                     <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
                         <h3 className="text-lg font-semibold text-gray-800">Como posso entrar em Contato?</h3>
                         <p className="text-gray-600 mt-2">Você pode entrar em contato conosco na página <Link to="/contato" className="text-purple-600 font-semibold">Contato</Link>.</p>
