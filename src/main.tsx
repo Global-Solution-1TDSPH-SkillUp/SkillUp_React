@@ -14,6 +14,7 @@ import Perfil from './routes/Perfil/Perfil.tsx'
 import EditarPerfil from './routes/EditarPerfil/EditarPerfil.tsx'
 import GerenciarSkills from './routes/GerenciarSkills/GerenciarSkills.tsx'
 import GerenciarCursos from './routes/GerenciarCursos/GerenciarCursos.tsx'
+import { ThemeProvider } from './contexts/ThemeContext.tsx'
 
 const router = createBrowserRouter([
   {path:"/", element: <App/>, errorElement:<Error/>, children:[
@@ -32,6 +33,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <ThemeProvider>
       <RouterProvider router={router}/>
+    </ThemeProvider>
   </StrictMode>,
 )
