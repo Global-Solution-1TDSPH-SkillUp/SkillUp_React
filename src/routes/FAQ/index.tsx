@@ -2,31 +2,37 @@ import { Link } from "react-router-dom";
 
 export default function FAQ(){
     return(
-        <main>
-            <h1>Perguntas Frequentes</h1>
-            <div>
-                <h3>Como o sistema funciona?</h3>
-                <p>Com base nas informações forncidas pelo usuário o sistema analisa suas formações e skills para te recomendar cursos para Upskilling e caso queira se aprofundar em um assunto que já sabe tambem temos o sistema de Reskilling</p>
-            </div>
+        <main className="min-h-[calc(100vh-5rem)] py-12 px-4 bg-linear-to-br from-blue-50 via-purple-50 to-pink-50">
+            <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                <h1 className="text-3xl font-extrabold text-gray-800 mb-2">Perguntas Frequentes</h1>
+                <p className="text-gray-600 mb-6">Abaixo estão as dúvidas mais comuns. Substitua o conteúdo das caixas pelas respostas completas quando desejar.</p>
 
-            <div>
-                <h3>O sistema funciona 24 horas?</h3>
-                <p>Sim, o sistema funciona 24 horas.</p>
-            </div>
+                <div className="space-y-4">
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">-------</h3>
+                        <p className="text-gray-600 mt-2">------</p>
+                    </div>
 
-            <div>
-                <h3>O sistema irá apresentar minhas Skills?</h3>
-                <p>Sim, o sistema permite você apresentar suas HardSkills e SoftSkills</p>
-            </div>
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">-------</h3>
+                        <p className="text-gray-600 mt-2">------</p>
+                    </div>
 
-            <div>
-                <h3>Posso exportar meu Perfil?</h3>
-                <p>Sim, o sistema permite você exportar seu perfim com seus cursos e skills.</p>
-            </div>
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">----------</h3>
+                        <p className="text-gray-600 mt-2">-----------</p>
+                    </div>
 
-            <div>
-                <h3>Como posso entrar em Contato?</h3>
-                <p>Você pode entrar em contato conosco na página <Link to="/contato ">Contato.</Link></p>
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">----------</h3>
+                        <p className="text-gray-600 mt-2">----------</p>
+                    </div>
+
+                    <div className="p-4 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-800">------------------</h3>
+                        <p className="text-gray-600 mt-2">-------------</p>
+                    </div>
+                </div>
             </div>
         </main>
     )
