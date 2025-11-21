@@ -15,7 +15,7 @@ export default function ExibirEndereco({ endereco }: ExibirEnderecoProps) {
         );
     }
 
-    const { linha1, linha2, linha3 } = formatarEnderecoMultilinhas(endereco);
+    const linhas = formatarEnderecoMultilinhas(endereco);
 
     return (
         <div className="bg-white p-4 sm:p-5 rounded-lg border-2 border-gray-200 hover:border-green-300 transition-colors">
@@ -24,9 +24,9 @@ export default function ExibirEndereco({ endereco }: ExibirEnderecoProps) {
                 <div className="flex-1">
                     <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">Endereço</h3>
                     <div className="space-y-1 text-sm sm:text-base text-gray-700">
-                        <p className="font-medium">{linha1}</p>
-                        <p>{linha2}</p>
-                        <p className="text-xs sm:text-sm text-gray-600">{linha3}</p>
+                        <p className="font-medium">{linhas[0]}</p>
+                        <p>{linhas[1]}</p>
+                        <p className="text-xs sm:text-sm text-gray-600">{linhas[2]}</p>
                     </div>
                 </div>
             </div>
