@@ -28,6 +28,9 @@ Com a utilização de tecnologias modernas como Java, Jakarta EE, Oracle Databas
 
 ## 🔗 Links Importantes
 
+### Link do Vídeo publicano no youtube
+- **Vídeo**: https://www.youtube.com/watch?v=cR7OBi7-fBc
+
 ### API Backend (Java)
 - **URL da API**: https://skillup-kb0z.onrender.com
 - **Tecnologias**: Java, Jakarta EE, JAX-RS
@@ -285,6 +288,10 @@ Sistema de retry para lidar com cold start do Render.com:
 - **Branch de Desenvolvimento**: `develop`
 - **Branch de Produção**: `main`
 - **Professor Orientador**: Alexandre Carlos de Jesus
+
+## 📞 Contato
+- **E-mail**: skillup@ot.com.br
+- **numero**: +55 11 9923-0238
 
 ## 📄 Licença
 
