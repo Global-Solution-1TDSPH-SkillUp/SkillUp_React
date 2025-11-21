@@ -230,12 +230,12 @@ interface FormularioEnderecoProps {
   onEnderecoChange: (campo: keyof TipoEndereco, valor: string | number) => void;
 }
 
-export const FormularioEndereco: React.FC<FormularioEnderecoProps> = ({
+export const FormularioEndereco = ({
   possuiEndereco,
   onPossuiEnderecoChange,
   endereco,
   onEnderecoChange,
-}) => {
+}: FormularioEnderecoProps) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
