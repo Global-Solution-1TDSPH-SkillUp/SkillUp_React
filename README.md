@@ -57,29 +57,37 @@ Com a utilização de tecnologias modernas como Java, Jakarta EE, Oracle Databas
 ```
 src/
 ├── components/          # Componentes reutilizáveis
-│   ├── Cabecalho/      # Header com menu de navegação
-│   ├── Menu/           # Menu lateral
-│   └── Rodape/         # Footer
-├── routes/             # Páginas da aplicação
-│   ├── Login/          # Autenticação de usuário
-│   ├── Cadastro/       # Registro de novo usuário
-│   ├── Home/           # Página inicial
-│   ├── Perfil/         # Visualização do perfil
-│   ├── EditarPerfil/   # Edição de dados do usuário
-│   ├── GerenciarSkills/    # CRUD de habilidades
-│   ├── GerenciarCursos/    # CRUD de matrículas em cursos
-│   ├── QuemSomos/      # Sobre o projeto
-│   ├── Contato/        # Formulário de contato
-│   ├── FAQ/            # Perguntas frequentes
-│   └── Error/          # Página de erro 404
-├── types/              # Definições TypeScript
-│   ├── TipoUsuario.ts
-│   ├── TipoSkill.ts
+│   ├── Cabecalho/       # Header com menu de navegação
+│   ├── ExibirEndereco/  # Exibição de endereços do usuário
+│   ├── Menu/            # Menu lateral
+│   ├── Rodape/          # Footer
+│   └── ThemeToggle/     # Alternância de tema (Dark/Light)
+├── contexts/            # Contextos globais
+│   └── ThemeContext.tsx # Gerenciamento de tema
+├── routes/              # Páginas da aplicação
+│   ├── Cadastro/        # Registro de novo usuário
+│   ├── Contato/         # Formulário de contato
+│   ├── EditarPerfil/    # Edição de dados do usuário
+│   ├── Endereco/        # Gerenciamento de endereços
+│   ├── Error/           # Página de erro 404
+│   ├── FAQ/             # Perguntas frequentes
+│   ├── GerenciarCursos/ # CRUD de matrículas em cursos
+│   ├── GerenciarSkills/ # CRUD de habilidades
+│   ├── Home/            # Página inicial
+│   ├── Login/           # Autenticação de usuário
+│   ├── Perfil/          # Visualização do perfil
+│   └── QuemSomos/       # Equipe
+├── types/               # Definições TypeScript
 │   ├── TipoCurso.ts
-│   └── TipoMatricula.ts
-├── App.tsx             # Componente raiz
-├── main.tsx            # Entry point
-└── globals.css         # Estilos globais
+│   ├── TipoEndereco.ts
+│   ├── TipoMatricula.ts
+│   ├── TipoSkill.ts
+│   └── TipoUsuario.ts
+├── utils/               # Utilitários e helpers
+│   ├── EstadosBrasileiros.ts # Lista de estados brasileiros
+├── App.tsx              # Componente raiz
+├── globals.css          # Estilos globais
+├── main.tsx             # Entry point
 ```
 
 ## 🚀 Funcionalidades
@@ -119,11 +127,18 @@ src/
 - `DELETE /usuario-hardskill/{id}` - Remover hard skill
 - `DELETE /usuario-softskills/{id}` - Remover soft skill
 
-#### Cursos e Matrículas
-- `GET /cursos` - Listar todos os cursos
-- `GET /matriculas` - Listar todas as matrículas (com JOIN de dados do curso)
-- `POST /matriculas` - Criar matrícula em curso
-- `DELETE /matriculas/{id}` - Remover matrícula
+#### Cursos
+- `GET /cursos` - Listar todos os cursos disponíveis
+- `POST /usuario-curso` - Matricular usuário em um curso
+- `GET /usuario-curso/usuario/{id}` - Listar cursos de um usuário
+- `PUT /usuario-curso/{id}` - Atualizar progresso de um curso
+- `DELETE /usuario-curso/{id}` - Remover matrícula de um curso
+
+#### Endereços
+- `POST /usuario-endereco` - Adicionar endereço ao usuário
+- `GET /usuario-endereco/usuario/{id}` - Listar endereços de um usuário
+- `PUT /usuario-endereco/{id}` - Atualizar endereço do usuário
+
 
 ## 💻 Como Executar Localmente
 
@@ -232,7 +247,7 @@ Sistema de retry para lidar com cold start do Render.com:
 - [x] Filtros avançados de cursos (por área, nível, carga horária)
 - [x] Gráficos de progresso em cursos
 - [ ] Exportação de relatório em PDF
-- [ ] Dark mode
+- [x] Dark mode
 
 ### Médio Prazo
 - [x] **GitFlow**: Integração completa com workflow Git
