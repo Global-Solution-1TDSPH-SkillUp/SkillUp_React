@@ -37,6 +37,9 @@ Com a utilização de tecnologias modernas como Java, Jakarta EE, Oracle Databas
 - **URL**: https://github.com/Global-Solution-1TDSPH-SkillUp/SkillUp_React.git
 - **Branch Principal**: `develop`
 
+## App Na Vercel
+- **URL**: https://skill-up-react-nine.vercel.app/
+
 ## 🛠️ Tecnologias Utilizadas
 
 ### Frontend
