@@ -1,8 +1,10 @@
 import { LuMessagesSquare as Conversa } from "react-icons/lu";
 import { MdOutlineEmail as Email } from "react-icons/md";
 import { LiaPhoneVolumeSolid as Telefone} from "react-icons/lia";
+import { useTheme } from "../../contexts/ThemeContext";
 
 export default function Contato(){
+    const { theme } = useTheme();
     const canaisDeContato = [
         {
             icone: Conversa,
@@ -31,8 +33,11 @@ export default function Contato(){
     ];
 
     return(
-        <div className="min-h-[calc(100vh-5rem)] bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 py-16 px-4">
-            
+        <div className={`min-h-[calc(100vh-5rem)] py-16 px-4 transition-colors duration-300 ${
+        theme === 'dark'
+        ? 'bg-gray-100 text-white'
+        : 'bg-linear-to-br from-blue-50 via-purple-50 to-pink-50'
+        }`}>
             <header className="text-center mb-12 max-w-3xl mx-auto">
                 <h1 className="text-5xl font-extrabold text-gray-800 mb-4">
                     Entre em <span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Contato</span>
@@ -55,11 +60,11 @@ export default function Contato(){
                         // Card do Canal de Contato
                         <div 
                             key={canal.titulo}
-                            className={`bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-all duration-300 border-t-4 ${borderColor} flex flex-col items-center p-8 text-center`}
+                            className={`rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-all duration-300 border-t-4 ${borderColor} flex flex-col items-center p-8 text-center ${theme === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-800'}`}
                         >
                             <IconeComponent className={`w-12 h-12 mb-4 text-purple-600 ${canal.corHover} transition-colors`} />
 
-                            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                            <h2 className={`text-2xl font-semibold mb-2 ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>
                                 {canal.titulo}
                             </h2>
                             
@@ -72,10 +77,10 @@ export default function Contato(){
                             </a>
                             
                             {/* Informações de Horário */}
-                            <p className="text-sm font-medium text-gray-600 mb-1">
+                            <p className={`text-sm font-medium mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                                 {canal.horario1}
                             </p>
-                            <p className="text-md font-bold text-purple-700">
+                            <p className={`text-md font-bold ${theme === 'dark' ? 'text-purple-400' : 'text-purple-700'}`}>
                                 {canal.horario2}
                             </p>
 
